@@ -1,0 +1,6 @@
+  - name: "[TMUX] Creating ~/.tmux.conf"
+    copy:
+      src: ../files/.tmux.conf
+      dest: /root/.tmux.conf
+    tags:
+    - tmux_config

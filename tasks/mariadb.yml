@@ -1,0 +1,12 @@
+- name: "[MARIADB] Edit /etc/my.cnf.d/server.cnf"
+  blockinfile:
+      content: |
+        {% raw %}[mysqld]
+        #log-bin=mysql-bin
+        #binlog_format=mixed
+        bind-address = 127.0.0.1
+        {% endraw %}
+      dest: /etc/my.cnf.d/server.cnf
+  notify: "[MARIADB] restart and enable mariadb"
+  tags:
+    - mariadb

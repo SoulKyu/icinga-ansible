@@ -1,0 +1,6 @@
+- name: "[MARIADB] restart and enable mariadb"
+  systemd:
+    name: mariadb
+    state: restarted
+    enabled: yes
+  tags: mariadb

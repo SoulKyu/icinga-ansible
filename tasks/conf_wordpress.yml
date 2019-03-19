@@ -1,0 +1,53 @@
+- include_vars: ../vars/mysql.yml
+  tags: wordpress
+
+- name: "[WORDPRESS] Be Sure no wordpress already exist"
+  command: ls /var/www/html/wordpress
+  register: lswordpress
+  failed_when: lswordpress.rc > 2
+  tags: wordpress
+
+- name: "[WORDPRESS] Unzip wordpress"
+  command: unzip -q /opt/latest.zip -d /var/www/html/
+  when: lswordpress.rc == 2
+  tags: wordpress
+
+- name: "[WORDPRESS] Update Permission"
+  file:
+    path: /var/www/html/wordpress
+    recurse: yes
+    owner: apache
+    group: apache
+    mode: 755
+  when: lswordpress.rc == 2
+  tags: wordpress
+
+- name: "[WORDPRESS] Create Upload directory"
+  file:
+    path: /var/www/html/wordpress/wp-content/uploads
+    state: directory
+    force: yes
+    group: apache
+  when: lswordpress.rc == 2
+  tags: wordpress
+
+- name: "[WORDPRESS] Rename Files"
+  command: mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
+  when: lswordpress.rc == 2
+  tags: wordpress
+
+- name: "[WORDPRESS] Edit access "
+  command: sudo chmod -R 755 /var/www/html/wordpress/
+  tags: wordpress
+  
+- name: "[WORDPRESS] Copy wp-config.php"
+  template:
+    src: ../templates/wp-config.php
+    dest: /var/www/html/wordpress/wp-config.php
+  tags:
+  - wordpress
+
+- name: "[WORDPRESS] Change documentroot"
+  command: sed -i 's\DocumentRoot "/var/www/html/"\DocumentRoot "/var/www/html/wordpress/"\g' httpd.conf
+  ignore_error: yes
+  tags: wordpress

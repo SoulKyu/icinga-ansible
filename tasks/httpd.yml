@@ -1,0 +1,44 @@
+- name: "[HTTPD] Edit /etc/httpd/conf.d/options.conf"
+  blockinfile:
+      content: |
+        {% raw %}
+        TraceEnable off
+
+        ## Disable Signature
+        ServerSignature Off
+
+        ## Disable Banner
+        ServerTokens Prod
+        {% endraw %}
+      dest: /etc/httpd/conf.d/options.conf
+      state: present
+      create: yes
+  tags:
+    - httpd
+
+- name: "[HTTPD] Edit /etc/httpd/conf.d/vhosts.conf"
+  blockinfile:
+      content: |
+        {% raw %}
+        # Load my vhosts
+        IncludeOptional vhosts.d/*.conf
+        {% endraw %}
+      dest: /etc/httpd/conf.d/vhosts.conf
+      state: present
+      create: yes
+  tags:
+    - httpd
+
+- name: "[HTTPD] Create /etc/httpd/vhosts.d"
+  file:
+    path: /etc/httpd/vhosts.d
+    state: directory
+    mode: 0755
+  tags: httpd
+
+- name: "[HTTPD] Validate configuration"
+  command: apachectl configtest
+  register: syntax
+  failed_when: "'Syntax OK' not in syntax.stderr"
+  notify: "[HTTPD] restart and enable httpd"
+  tags: httpd

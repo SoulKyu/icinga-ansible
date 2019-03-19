@@ -1,2 +1,25 @@
 ---
-# tasks file for /mnt/c/Users/PC-Guillaume/Documents/test
+- name: System Provisioning
+  hosts: all
+  gather_facts: yes
+
+  #vars_files:
+  #- ../vars/main.yml
+  #- ../vars/ldap.yml
+#
+  handlers:
+  - import_tasks: ../handlers/mariadb.yml
+  - import_tasks: ../handlers/httpd.yml
+
+  tasks:
+  - import_tasks: yum.yml
+  - import_tasks: packages.yml
+  #- import_tasks: tmux.yml
+  - import_tasks: zsh.yml
+  - import_tasks: neofetch.yml
+  - import_tasks: mariadb.yml
+  - import_tasks: httpd.yml
+  - import_tasks: php.yml
+  - import_tasks: mysql.yml
+  - import_tasks: icinga.yml
+

@@ -1,0 +1,3 @@
+ohmyzsh_plugins: git centos tmux history z
+ohmyzsh_theme: dieter
+ohmyzsh_history_format: dd.mm.yyyy

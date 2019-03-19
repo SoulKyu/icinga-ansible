@@ -1,0 +1,6 @@
+- name: "[WORDPRESS] Download Wordpress"
+  get_url:
+    url: http://wordpress.org/latest.zip
+    dest: /opt/latest.zip
+    mode: 0744
+  tags: wordpress

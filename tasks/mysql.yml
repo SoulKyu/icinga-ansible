@@ -1,0 +1,38 @@
+- include_vars: ../vars/mysql.yml
+  tags: mysql
+
+- name: "[MYSQL] Be Sure MariaDB is OK"
+  command: systemctl restart mariadb
+  tags: mysql
+
+- name: "[MYSQL] Create DataBase"
+  command: mysql -u root -e "CREATE DATABASE wordpress;"
+  register: output
+  failed_when: output.rc > 1
+  tags: mysql
+
+- name: "[MYSQL] Create USER and Flush Privilege"
+  command: mysql -u root -e 'GRANT ALL PRIVILEGES on wordpress.* to {{ user }}@localhost identified by "{{ password }}"; FLUSH PRIVILEGES;'
+  failed_when: output.rc > 1
+  tags: mysql
+
+- name: "[MYSQL] Check if script already executed"
+  command: ls /root/config_mysql.sh
+  register: lsmysql
+  failed_when: lsmysql.rc > 2
+  tags: mysql
+
+- name: "[MYSQL] Copy Script"
+  copy:
+    src: ../files/config_mysql.sh
+    dest: /root/config_mysql.sh
+    owner: root
+    group: root
+    mode: 740
+  when: lsmysql.rc == 2
+  tags: mysql
+
+- name: "[MYSQL] Execute Script"
+  command: bash /root/config_mysql.sh
+  when: lsmysql.rc == 2
+  tags: mysql

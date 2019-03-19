@@ -1,0 +1,6 @@
+- name: "[HTTPD] restart and enable httpd"
+  systemd:
+    name: httpd
+    state: restarted
+    enabled: yes
+  tags: httpd

@@ -1,0 +1,14 @@
+- name: "[PHP] Edit /etc/php.ini"
+  blockinfile:
+      content: |
+        {% raw %}
+        date.timezone = Europe/Paris
+        memory_limit = 64M
+        expose_php = Off
+        {% endraw %}
+      dest: /etc/php.ini
+      state: present
+      create: yes
+  notify: "[HTTPD] restart and enable httpd"
+  tags:
+    - php

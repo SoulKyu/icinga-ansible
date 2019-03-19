@@ -1,0 +1,30 @@
+- include_vars: ../vars/oh-my-zsh.yml
+- name: "[ZSH] add repo oh-my-zsh"
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh
+    dest: /root/.oh-my-zsh
+  tags:
+    - zsh
+
+- name: "[ZSH] Creating ~/.zshrc"
+  template:
+    src: ../templates/root/.zshrc.j2
+    dest: /root/.zshrc
+  tags:
+    - zsh
+    - zsh_config
+
+- name: "[ZSH] Change user for zsh shell"
+  user:
+    name: root
+    shell: /usr/bin/zsh
+  tags:
+    - zsh
+
+- name: "[ZSH] Create folder"
+  file:
+    path: /root/.config/neofetch
+    state: directory
+    recurse: yes
+  tags:
+    - zsh

@@ -1,0 +1,12 @@
+---
+- name: "[update] upgrade all packages"
+  yum:
+    name: '*'
+    state: latest
+  tags: update
+
+- name: "[update] Install EPEL-RELEASE"
+  yum: 
+    name: epel-release
+    state: present
+  tags: update

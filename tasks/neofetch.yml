@@ -1,0 +1,25 @@
+- name: "[NEOFETCH] Install"
+  command: curl -o /etc/yum.repos.d/konimex-neofetch-epel-7.repo https://copr.fedorainfracloud.org/coprs/konimex/neofetch/repo/epel-7/konimex-neofetch-epel-7.repo
+  tags: neofetch
+
+- name: "[NEOFETCH] Install Package"
+  yum: 
+    name: neofetch
+    state: present
+  tags: neofetch
+
+- name: "[NEOFETCH] Create folder"
+  file:
+    path: /root/.config/neofetch
+    state: directory
+    recurse: yes
+  tags:
+  - neofetch
+
+- name: "[NEOFETCH] Configuration file"
+  template:
+    src: ../templates/root/.config/neofetch/config.j2
+    dest: /root/.config/neofetch/config
+  tags:
+  - neofetch
+  - neofetch_config

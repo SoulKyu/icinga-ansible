@@ -1,0 +1,8 @@
+- include_vars: ../vars/packages.yml
+  tags: packages
+
+- name: "[PACKAGE] Install requirements packages"
+  yum:
+    name: "{{ packages }}"
+    state: present
+  tags: packages
