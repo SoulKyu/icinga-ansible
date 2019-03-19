@@ -1,7 +1,3 @@
-- name: "[ICINGA] Install Icinga Repository"
-  command: yum install -y https://packages.icinga.com/epel/icinga-rpm-release-7-latest.noarch.rpm
-  tags: icinga
-
 - name: "[ICINGA] Install Icinga"
   yum:
     name: icinga
@@ -22,4 +18,8 @@
   yum:
     name: vim-icinga2
     state: latest
+  tags: icinga
+
+- name: "[ICINGA] Add plugins"
+  command: icinga2 feature enable ido-mysql
   tags: icinga

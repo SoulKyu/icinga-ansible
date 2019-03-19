@@ -22,8 +22,5 @@ packages:
   - mariadb 
   - mariadb-server 
   - mysql
-  - httpd 
-  - openssl 
-  - mod_ssl
-  - php 
-  - php-mysql
+  - mysql-server
+  - icinga2-ido-mysql

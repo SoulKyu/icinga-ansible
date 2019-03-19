@@ -6,13 +6,13 @@
   tags: mysql
 
 - name: "[MYSQL] Create DataBase"
-  command: mysql -u root -e "CREATE DATABASE wordpress;"
+  command: mysql -u root -e "CREATE DATABASE icinga;"
   register: output
   failed_when: output.rc > 1
   tags: mysql
 
 - name: "[MYSQL] Create USER and Flush Privilege"
-  command: mysql -u root -e 'GRANT ALL PRIVILEGES on wordpress.* to {{ user }}@localhost identified by "{{ password }}"; FLUSH PRIVILEGES;'
+  command: mysql -u root -e 'GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE VIEW, INDEX, EXECUTE on icinga.* to icinga@localhost identified by "icinga"; FLUSH PRIVILEGES;'
   failed_when: output.rc > 1
   tags: mysql
 
@@ -35,4 +35,8 @@
 - name: "[MYSQL] Execute Script"
   command: bash /root/config_mysql.sh
   when: lsmysql.rc == 2
+  tags: mysql
+
+- name: "[MYSQL] Import conf using script"
+  command: mysql -u root -e icinga < /usr/share/icinga2-ido-mysql/schema/mysql.sql
   tags: mysql
