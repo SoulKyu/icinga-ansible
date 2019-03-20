@@ -4,7 +4,11 @@ all:
       children:
         entreprise:
           hosts:
-            web_01:
+            srv_01:
               ansible_ssh_host: ec2-35-180-165-190.eu-west-3.compute.amazonaws.com
+              vars:
+                test: true
+            srv_02:
+              ansible_ssh_host: 35.180.107.78
               vars:
                 test: true

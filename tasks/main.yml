@@ -18,8 +18,9 @@
   - import_tasks: zsh.yml
   - import_tasks: neofetch.yml
   - import_tasks: mariadb.yml
-  - import_tasks: httpd.yml
+  #- import_tasks: httpd.yml
   - import_tasks: php.yml
   - import_tasks: mysql.yml
+  - import_tasks: secu.yml
   - import_tasks: icinga.yml
 
