@@ -13,4 +13,6 @@
 
 - name: "[UPDATE] Add icinga repo"
   command: yum install -y https://packages.icinga.com/epel/icinga-rpm-release-7-latest.noarch.rpm
+  register: rc
+  failed_when: rc.rc > 1 
   tags: update

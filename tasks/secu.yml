@@ -1,18 +1,3 @@
-- name: "[FIREWALLD] Add service"
-  command: firewall-cmd --add-service=http
-  tags: firewalld
-
-- name: "[FIREWALLD] Set permanent"
-  command: firewall-cmd --permanent --add-service=http
-  tags: firewalld
-
-- name: "[FIREWALLD] Add service"
-  command: firewall-cmd --add-service=https
-  tags: firewalld
-
-- name: "[FIREWALLD] Set permanent"
-  command: firewall-cmd --permanent --add-service=https
-  tags: firewalld
 
 - name: "[IPTABLES] Accept rule port 80"
   command: iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
